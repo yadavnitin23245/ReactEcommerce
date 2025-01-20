@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 5000;
 app.use('/api', loginRoutes);
 
 //Database
-mongoose.connect('mongodb://localhost/mern-stack-db', {
+mongoose.connect('mongodb://192.168.2.93/Localdatabase?directConnection=true', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
