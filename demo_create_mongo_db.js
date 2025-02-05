@@ -27,23 +27,6 @@ async function insertCustomer(customerData) {
   }
 }
 
-//for insert
-//for inserting data
-async function insert_data_into_employee(employeeData) {
-  const client = await connectDB(); // Get the connected client
-  try {
-    const db = client.db(dbName);
-    const customersCollection = db.collection("employee");
-
-    const result = await customersCollection.insertOne(employeeData);
-    console.log("Customer inserted successfully with ID:", result.insertedId);
-  } catch (err) {
-    console.error("Error inserting customer:", err);
-  } finally {
-    await client.close(); // Close the connection after operation
-  }
-}
-
 //insert data into boss
 //for inserting data
 async function insert_data_into_boss(bossdata) {
@@ -51,6 +34,14 @@ async function insert_data_into_boss(bossdata) {
   try {
     const db = client.db(dbName);
     const customersCollection = db.collection("Boss");
+
+    // Check if the email already exists
+    const existingBoss = await customersCollection.findOne({ email: bossdata.email });
+
+    if (existingBoss) {
+      console.log("Email already exists. Skipping insertion.");
+      return { success: false, message: "Email already exists" };
+    }
 
     const result = await customersCollection.insertOne(bossdata);
     console.log("bossdata inserted successfully with ID:", result.insertedId);
@@ -60,6 +51,7 @@ async function insert_data_into_boss(bossdata) {
     await client.close(); // Close the connection after operation
   }
 }
+
 
 
 
@@ -85,8 +77,8 @@ Create_Collection("Boss");
 Create_Collection("employee");
 //insertCustomer({ name: "John Doe", email: "johndoe@example.com", phone: "1234567890" });
 
-insert_data_into_boss({ name: "John Doe", email: "johndoe@example.com", phone: "1234567890", isdelete: false });
-insert_data_into_employee({ name: "Mohn", email: "mohndoe@example.com", phone: "1234567890", isdelete: false });
+insert_data_into_boss({ name: "John Doe", email: "johndoe1@example.com", phone: "1234567890", isdelete: false });
+// insert_data_into_employee({ name: "Mohn", email: "mohndoe@example.com", phone: "1234567890", isdelete: false });
 
 
 
