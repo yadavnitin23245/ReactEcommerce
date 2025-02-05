@@ -34,6 +34,14 @@ async function connectDB() {
     try {
       const db = client.db(dbName);
       const customersCollection = db.collection("Boss");
+
+      // Check if the email already exists
+      const existingBoss = await customersCollection.findOne({ email: bossdata.email });
+
+      if (existingBoss) {
+          console.log("Email already exists. Skipping insertion.");
+          return { success: false, message: "Email already exists" };
+      }
   
       const result = await customersCollection.insertOne(bossdata);
       console.log("bossdata inserted successfully with ID:", result.insertedId);
