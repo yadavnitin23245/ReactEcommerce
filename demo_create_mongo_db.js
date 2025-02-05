@@ -1,6 +1,8 @@
 const { MongoClient } = require('mongodb');
-const url = "mongodb://localhost:27017";
-const dbName = "mydb";
+
+//const url = "mongodb://localhost:27017";
+const url = "mongodb://192.168.2.93";
+const dbName = "Localdatabase";
 
 async function connectDB() {
     const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
